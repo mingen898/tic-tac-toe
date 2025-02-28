@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tic Tac Toe</title>
+    <style>
+      body{
+        font-family: arial;
+      }
+
+      .container{
+        display: grid;
+        grid-template-columns: 100px 100px 100px;
+        min-width: 0;
+        min-height: 0;
+        margin-top: 50px;
+      }
+
+      .cell{
+        width: 100px;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: solid;
+        cursor: pointer;
+        padding: 0;
+      }
+
+      #cell-0, #cell-1, #cell-2{
+        border-top: none;
+        border-right: none;
+        border-bottom: none;
+      }
+      
+      #cell-3, #cell-4, #cell-5{
+        border-right: none;
+        border-bottom: none;
+      }
+
+      #cell-6, #cell-7, #cell-8{
+        border-right: none;
+        border-bottom: none;
+      }
+
+      #cell-0, #cell-3, #cell-6{
+        border-left: none;
+      }
+
+      .icons{
+        height: 90px;
+        width: 90px;
+        margin: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Tic Tac Toe</h1>
+    <h3>Rules:</h3>
+    <div>1. Player One = X</div>
+    <div>2. Player Two = O</div>
+    <div>3. Player One starts first!</div>
+    <div class="container">
+      <div class="cell" id="cell-0" onclick="playGame(0)"></div>
+      <div class="cell" id="cell-1" onclick="playGame(1)"></div>
+      <div class="cell" id="cell-2" onclick="playGame(2)"></div>
+      <div class="cell" id="cell-3" onclick="playGame(3)"></div>
+      <div class="cell" id="cell-4" onclick="playGame(4)"></div>
+      <div class="cell" id="cell-5" onclick="playGame(5)"></div>
+      <div class="cell" id="cell-6" onclick="playGame(6)"></div>
+      <div class="cell" id="cell-7" onclick="playGame(7)"></div>
+      <div class="cell" id="cell-8" onclick="playGame(8)"></div>
+    </div>
+
+    <p class="result"></p>
+
+    <script>
+      const winningCombination = [
+        [0,1,2],
+        [3,4,5],
+        [6,7,8],
+        [0,3,6],
+        [1,4,7],
+        [2,5,8],
+        [0,4,8],
+        [2,4,6],
+      ]
+
+      //playerOne = X
+      //playerTwo = O
+      const playerOne = [];
+      const playerTwo = [];
+      let playerOneMovesFirst = true;
+      
+      
+      function playGame(code) {
+        if (playerOneMovesFirst && document.getElementById(`cell-${code}`).innerHTML === '') {
+          document.getElementById(`cell-${code}`)
+            .innerHTML = `<img class="icons" src="images/x-icon.png">`;
+          playerOne.push(code);
+          playerOneMovesFirst = false;
+        } else if (!playerOneMovesFirst && document.getElementById(`cell-${code}`).innerHTML === '') {
+            document.getElementById(`cell-${code}`)
+              .innerHTML = `<img class="icons" src="images/o-icon.png">`;
+            playerTwo.push(code);
+            playerOneMovesFirst = true;
+          }
+
+        for (let i = 0; i < winningCombination.length; i++) {
+          if (winningCombination[i].every(val => playerOne.includes(val))) {
+            document.querySelector('.result')
+              .innerHTML = 'Player One wins!';
+            break;
+          } else if (winningCombination[i].every(val => playerTwo.includes(val))) {
+            document.querySelector('.result')
+              .innerHTML = 'Player Two wins!';
+            break;
+          } else if (document.getElementById('cell-0').innerHTML !== '' &&
+              document.getElementById('cell-1').innerHTML !== '' &&
+              document.getElementById('cell-2').innerHTML !== '' &&
+              document.getElementById('cell-3').innerHTML !== '' &&
+              document.getElementById('cell-4').innerHTML !== '' &&
+              document.getElementById('cell-5').innerHTML !== '' &&
+              document.getElementById('cell-6').innerHTML !== '' &&
+              document.getElementById('cell-7').innerHTML !== '' &&
+              document.getElementById('cell-8').innerHTML !== '') {
+              document.querySelector('.result')
+                .innerHTML = 'Tie!';
+          }
+        }
+      }
+
+
+
+      // code to check whether an array is a subset
+      // const result = playerTwo.every(val => playerOne.includes(val));
+
+    </script>
+  </body>
+</html>
